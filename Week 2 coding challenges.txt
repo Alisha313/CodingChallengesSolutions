@@ -1,0 +1,130 @@
+a) Intersection: Given two (singly) linked lists, determine if the two lists intersect. Return the intersecting node. Note that the intersection is defined based on reference, not value. That is, if the kth node of the first linked list is the exact same node (by reference) as the jth node of the second linked list, then they are intersecting.
+
+
+class ListNode {
+    int val;
+    ListNode next;
+    
+    public ListNode(int val) {
+        this.val = val;
+        this.next = null;
+    }
+}
+
+public class LinkedListIntersection {
+
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode a = headA;
+        ListNode b = headB;
+        
+        while (a != b) {
+            // If a reaches the end of list A, move it to the head of list B
+            a = (a == null) ? headB : a.next;
+            
+            // If b reaches the end of list B, move it to the head of list A
+            b = (b == null) ? headA : b.next;
+        }
+        
+        // At this point, either a and b are both null (no intersection found)
+        // or they both point to the intersecting node
+        return a;
+    }
+
+    public static void main(String[] args) {
+        LinkedListIntersection solution = new LinkedListIntersection();
+
+        // Create two linked lists
+        ListNode commonNode = new ListNode(3);
+
+        ListNode headA = new ListNode(1);
+        headA.next = new ListNode(2);
+        headA.next.next = commonNode;
+
+        ListNode headB = new ListNode(4);
+        headB.next = commonNode;
+
+        ListNode intersectionNode = solution.getIntersectionNode(headA, headB);
+        if (intersectionNode != null) {
+            System.out.println("Intersection Node Value: " + intersectionNode.val);
+        } else {
+            System.out.println("No Intersection Found");
+        }
+    }
+}
+
+
+b) Loop Detection: Given a circular linked list, implement an algorithm that returns the node at the beginning of the loop.
+DEFINITION:
+Circular linked list: A (corrupt) linked list in which a node's next pointer points to an earlier node, so as to make a loop in the linked list.
+EXAMPLE
+Input: A -> B -> C -> D -> E -> C [the same C as earlier]
+Output: C
+
+
+class ListNode {
+    int val;
+    ListNode next;
+    
+    public ListNode(int val) {
+        this.val = val;
+        this.next = null;
+    }
+}
+
+public class LinkedListLoopDetection {
+
+    public ListNode detectCycle(ListNode head) {
+        if (head == null || head.next == null) {
+            return null;
+        }
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        // Check if there's a cycle
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast) {
+                // There is a cycle
+                break;
+            }
+        }
+
+        // If there's no cycle
+        if (fast == null || fast.next == null) {
+            return null;
+        }
+
+        // Move one pointer to the head and advance both pointers at the same rate until they meet
+        slow = head;
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        return slow; // Return the node at the beginning of the loop
+    }
+
+    public static void main(String[] args) {
+        LinkedListLoopDetection solution = new LinkedListLoopDetection();
+
+        // Create a circular linked list
+        ListNode commonNode = new ListNode('C');
+
+        ListNode head = new ListNode('A');
+        head.next = new ListNode('B');
+        head.next.next = commonNode;
+        head.next.next.next = new ListNode('D');
+        head.next.next.next.next = new ListNode('E');
+        head.next.next.next.next.next = commonNode; // Create the loop
+
+        ListNode loopStartNode = solution.detectCycle(head);
+        if (loopStartNode != null) {
+            System.out.println("Loop Start Node Value: " + loopStartNode.val);
+        } else {
+            System.out.println("No Loop Found");
+        }
+    }
+}
