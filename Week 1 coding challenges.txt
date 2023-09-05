@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Given an array of integers, return the largest gap between the sorted elements of the array.
 
 import java.util.Arrays;
@@ -62,3 +63,69 @@ print(calculate_perimeter("s4"))  # Output: 16 (4 * 4)
 print(calculate_perimeter("c2"))  # Output: 12.56 (6.28 * 2)
 
 
+=======
+Given an array of integers, return the largest gap between the sorted elements of the array.
+
+import java.util.Arrays;
+
+public class LargestGapFinder {
+    public static int largestGap(int[] arr) {
+        if (arr.length < 2) {
+            return 0;
+        }
+
+        Arrays.sort(arr);  // Sort the array in ascending order
+        int maxGap = 0;
+
+        for (int i = 1; i < arr.length; i++) {
+            int gap = arr[i] - arr[i - 1];
+            maxGap = Math.max(maxGap, gap);
+        }
+
+        return maxGap;
+    }
+
+    public static void main(String[] args) {
+        int[] inputArray = {3, 9, 1, 26, 4, 7};
+        int result = largestGap(inputArray);
+        System.out.println("Largest gap: " + result);
+    }
+}
+
+Create a function that determines whether a number is Oddish or Evenish. A number is Oddish if the sum of all of its digits is odd, and a number is Evenish if the sum of all of its digits is even. If a number is Oddish, return "Oddish". Otherwise, return "Evenish". 
+
+function isOddishOrEvenish(number) {
+    const digitSum = number.toString().split('').reduce((sum, digit) => sum + parseInt(digit), 0);
+    
+    if (digitSum % 2 === 0) {
+        return "Evenish";
+    } else {
+        return "Oddish";
+    }
+}
+
+// Test cases
+console.log(isOddishOrEvenish(123));  // Output: Oddish (1 + 2 + 3 = 6, which is even)
+console.log(isOddishOrEvenish(222));  // Output: Evenish (2 + 2 + 2 = 6, which is even)
+console.log(isOddishOrEvenish(555));  // Output: Oddish (5 + 5 + 5 = 15, which is odd)
+
+Write a function that takes a number and returns the perimeter of either a circle or a square. The input will be in the form (letter l, number num) where the letter will be either "s" for square, or "c" for circle, and the number will be the side of the square or the radius of the circle.
+
+def calculate_perimeter(shape):
+    letter = shape[0]
+    num = float(shape[1:])
+
+    is_circle = int(letter == 'c')
+    is_square = int(letter == 's')
+
+    circle_multiplier = (is_circle * 2) + 1
+    square_multiplier = (is_square * 3) + 1
+
+    return circle_multiplier * 3.14 * num + square_multiplier * 4 * num
+
+# Test cases
+print(calculate_perimeter("s4"))  # Output: 16 (4 * 4)
+print(calculate_perimeter("c2"))  # Output: 12.56 (6.28 * 2)
+
+
+>>>>>>> 2b6edec203a40e05978d275dc3ddac2fa27a8ed7
